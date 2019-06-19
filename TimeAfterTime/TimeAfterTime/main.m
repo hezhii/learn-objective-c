@@ -10,8 +10,9 @@
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        // insert code here...
-        NSDate *now = [NSDate date];
+        // 通过 alloc 和 init 消息来创建对象
+//        NSDate *now = [NSDate date];
+        NSDate *now = [[NSDate alloc] init];
         NSLog(@"This NSDate object lives at %p", now);
         NSLog(@"The date is %@", now);
         
@@ -21,6 +22,23 @@ int main(int argc, const char * argv[]) {
         NSHost *host = [NSHost currentHost];
         NSString *name = [host localizedName];
         NSLog(@"The name of the computer is %@", name);
+        
+        // 传递实参
+        NSDate *later = [now dateByAddingTimeInterval:100000];
+        NSLog(@"In 100,000 seconds it will be %@,", later);
+        
+        NSCalendar *cal = [NSCalendar currentCalendar];
+        NSLog(@"My calendar is %@", [cal calendarIdentifier]);
+        
+        // 传递多个实参
+        unsigned long day = [cal ordinalityOfUnit:NSCalendarUnitDay
+                                           inUnit:NSCalendarUnitMonth
+                                          forDate:now];
+        NSLog(@"This is day %lu of the month", day);
+        
+        // 消息嵌套发送
+        double seconds2 =[[NSDate date] timeIntervalSince1970];
+        NSLog(@"It has been %f seconds since the start of 1970", seconds2);
     }
     return 0;
 }
